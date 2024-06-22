@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sign Up</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-group {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .container {
+            width: 40%;
+            justify-content: center;
+            justify-items: center;
+            justify-self: center;
+            border: 2px solid blue;
+            border-radius: 30px;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgb(0, 0, 0);  
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="" name="submit-to-google-sheet">
+            <h1 class="mb-4 text-center">Admin Sign Up</h1>
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Create Username (Ex: Ashok)"
+                    required>
+                <div class="invalid-feedback">Please enter your name.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="yourmail@gmail.com"
+                    required>
+                <div class="invalid-feedback">Please enter a valid email.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="registrationid">Employee ID</label>
+                <input type="text" class="form-control" id="registrationid" name="registrationid"
+                    placeholder="Ex: W-xxxx" required>
+                <div class="invalid-feedback">Please enter your employee ID.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="male" name="gender" value="male" required>
+                    <label class="form-check-label" for="male">Male</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="female" name="gender" value="female" required>
+                    <label class="form-check-label" for="female">Female</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="others" name="gender" value="other" required>
+                    <label class="form-check-label" for="others">Other</label>
+                </div>
+                <div class="invalid-feedback">Please select your gender.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="branch">Branch</label>
+                <select class="form-control" id="branch" name="branch" required>
+                    <option value="">Select</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="CIVIL">CIVIL</option>
+                    <option value="MECHANICAL">MECH</option>
+                </select>
+                <div class="invalid-feedback">Please select your branch.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                
+                <div class="invalid-feedback">Please enter a password.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm-password" name="confirm-password"
+                    placeholder="Confirm your password" required>
+                
+                <div class="invalid-feedback">Please confirm your password.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+        <div class="messageContainer" id="messageContainer" style="text-align: center;font-weight: bolder; color: blueviolet;"></div>
+        <br>
+        <a class="btn btn-secondary" href="index.html" style="width: 40%; margin-left: 150px; ">Go back</a>
+    </div>
+    </body>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else {
+                            event.preventDefault(); // Prevent the form from submitting normally
+
+                            var formData = new FormData(form);
+
+                            fetch(form.action, {
+                                method: 'POST',
+                                body: formData
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    var messageContainer = document.getElementById('messageContainer');
+                                    messageContainer.textContent = ''; // Clear previous message
+
+                                    if (data.success) {
+                                        messageContainer.textContent = 'Successfully submitted!';
+                                        form.reset(); // Clear form inputs
+                                        form.classList.remove('was-validated');
+                                    } else {
+                                        messageContainer.textContent = 'Error: ' + data.error;
+                                    }
+                                })
+                                .catch(error => {
+                                    var messageContainer = document.getElementById('messageContainer');
+                                    messageContainer.textContent = 'Error: ' + error.message;
+                                });
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+        function togglePasswordVisibility(id) {
+            var passwordField = document.getElementById(id);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyl7Tjm_Zbajdda9lGWhNqCGEO-oiqMu3JyXAhXiltdpfE10m9s5z4SZoAqcH3uQMKL5Q/exec'
+        const form = document.forms['submit-to-google-sheet']
+      
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => console.log('Success!', response))
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+</body>
+
+</html>

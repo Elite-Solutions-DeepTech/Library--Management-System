@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown with iframe and buttons</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        select:focus {
+            border-color: #007bff;
+        }
+        #iframeContainer {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 100%;
+            height: 1000px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #buttonContainer {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        @keyframes fadeInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body onload="checkAuthentication()">
+    <h1>Select Your Books</h1>
+    <select id="websiteSelector" onchange="loadWebsite()">
+        <option value="">--Select a book--</option>
+        <option value="search1.html">Departmental Books</option>
+        <option value="https://www.pdfdrive.com/">Non Departmental Books</option>
+    </select>
+
+    <div id="iframeContainer">
+        <iframe id="resultFrame" src=""></iframe>
+    </div>
+
+    <div id="buttonContainer">
+        <button onclick="reloadIframe()">Reload</button>
+        <button onclick="openInNewTab()">Open in New Tab</button>
+        <button onclick="clearIframe()">Clear</button>
+        <button onclick="logout()">Log Out</button>
+    </div>
+<script src="script.js"></script>
+    <script>
+        function loadWebsite() {
+            var selector = document.getElementById('websiteSelector');
+            var iframe = document.getElementById('resultFrame');
+            var container = document.getElementById('iframeContainer');
+            var selectedValue = selector.value;
+
+            if (selectedValue) {
+                iframe.src = selectedValue;
+                container.style.animation = 'none';
+                setTimeout(() => {
+                    container.style.animation = '';
+                }, 10);
+            } else {
+                iframe.src = "";
+            }
+        }
+
+        function reloadIframe() {
+            var iframe = document.getElementById('resultFrame');
+            iframe.src = iframe.src;
+        }
+
+        function openInNewTab() {
+            var selector = document.getElementById('websiteSelector');
+            var selectedValue = selector.value;
+            if (selectedValue) {
+                window.open(selectedValue, '_blank');
+            }
+        }
+
+        function clearIframe() {
+            var iframe = document.getElementById('resultFrame');
+            iframe.src = "";
+        }
+    </script>
+</body>
+</html>

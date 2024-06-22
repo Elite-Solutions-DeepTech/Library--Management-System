@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+      background-image: url("https://cdn.dribbble.com/users/1825304/screenshots/12192540/media/97e49ce3cde8d61dcc3b79571ba2d107.gif");
+      background-size: cover;
+      background-color: transparent;
+    }
+  </style>
+<body>
+    <div id="start-page" class="start-page">
+        
+        <div class="new_nav">
+          <h1><span style="color: rgb(255, 255, 255);">WISTM </span><span style="color: blue;" >LMS</span></h1>
+          <ul class="s_ul">
+            <li class="s_li"><a href="#">Home</a></li>
+            <li class="s_li"><a href="FAQ.html">About</a></li>
+            <li class="s_li"><a href="#contact">Contact us</a></li>
+            <a href="index.html" class="n_btn">Sign In / Sign Up</a>
+          </ul>
+        </div>
+        <div class="s_container" >
+          <h1>WISTM<span> LMS</span></h1>
+          <div style=" font-style: italic;">
+          <p>a library management system involves creating a user-friendly interface that facilitates efficient organization,<br> access to resources, and seamless management of library operations.<br> It provides a centralized system for libraries to efficiently manage their resources,<span> <br>streamline administrative tasks, and enhance user services</span></p>
+          <a id="start-button" class="start-btn" href="index.html" >Let's go</a>
+          </div>
+        </div>
+      </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+  const startButton = document.getElementById("start-button");
+  const startPage = document.getElementById("start-page");
+  const homePage = document.getElementById("home-page");
+  const login_from = document.getElementById("login-button");
+
+  startButton.addEventListener("click", () => {
+    startPage.style.display = "none";
+    homePage.style.display = "block";
+  });
+
+
+});
+    </script>
+</body>
+</html>
